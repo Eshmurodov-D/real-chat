@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Chat</title>
+</head>
+<body>
+    <h1>Real-Time Chat</h1>
+    <button onclick="sendMessage()">Xabar yuborish</button>
+    <ul id="messages"></ul>
+
+    <script>
+        const ws = new WebSocket("wss://real-time-chat.onrender.com");
+
+        ws.onopen = () => {
+            console.log("WebSocket bog‘landi!");
+        };
+
+        ws.onmessage = (event) => {
+            const messagesList = document.getElementById("messages");
+            const newMessage = document.createElement("li");
+            newMessage.textContent = event.data;
+            messagesList.appendChild(newMessage);
+        };
+
+        ws.onclose = () => {
+            console.log("WebSocket uzildi!");
+        };
+
+        function sendMessage() {
+            ws.send("Salom, WebSocket!");
+        }
+    </script>
+</body>
+</html>
